@@ -1,0 +1,45 @@
+# 微信小程序相关
+.DS_Store
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 小程序开发工具生成的文件
+project.config.json
+project.private.config.json
+sitemap.json
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+
+# 日志文件
+logs/
+*.log
+
+# 环境配置文件
+.env
+.env.local
+.env.development
+.env.production
+
+# IDE配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 备份文件
+*.bak
+*.backup
+
+# 依赖包
+dist/
+build/

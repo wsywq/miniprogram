@@ -1,0 +1,111 @@
+<!-- pages/index/index.wxml - 首页模板 -->
+<view class="container">
+  <!-- 用户信息头部 -->
+  <view class="header-section">
+    <view class="user-greeting">
+      <text class="greeting-text">{{greeting}}，{{userInfo.nickname || '用户'}}</text>
+      <text class="date-text">{{todayDate}}</text>
+    </view>
+    <view class="user-points">
+      <text class="points-label">积分</text>
+      <text class="points-value">{{userInfo.points || 0}}</text>
+    </view>
+  </view>
+
+  <!-- 今日概览 -->
+  <view class="today-overview card">
+    <view class="card-title">今日概览</view>
+    <view class="overview-stats">
+      <view class="stat-item">
+        <text class="stat-number">{{habits.length}}</text>
+        <text class="stat-label">总习惯</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{Object.keys(todayCheckins).length}}</text>
+        <text class="stat-label">已完成</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{habits.length - Object.keys(todayCheckins).length}}</text>
+        <text class="stat-label">待完成</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 习惯列表 -->
+  <view class="habits-section">
+    <view class="section-header">
+      <text class="section-title">我的习惯</text>
+      <view class="add-habit-btn" bindtap="goToCreateHabit">
+        <text class="add-icon">+</text>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading-container">
+      <view class="loading"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 习惯列表 -->
+    <view wx:elif="{{habits.length > 0}}" class="habits-list">
+      <view 
+        wx:for="{{habits}}" 
+        wx:key="id" 
+        class="habit-card {{getHabitStatus(item.id) === 'completed' ? 'completed' : ''}}"
+        data-habit-id="{{item.id}}"
+        data-habit-name="{{item.name}}"
+        bindtap="goToCheckin"
+        bindlongpress="onHabitLongPress"
+      >
+        <view class="habit-info">
+          <view class="habit-icon">{{item.icon || '📝'}}</view>
+          <view class="habit-details">
+            <text class="habit-name">{{item.name}}</text>
+            <text class="habit-streak">{{formatStreakText(getStreakDays(item))}}</text>
+          </view>
+        </view>
+        
+        <view class="habit-actions">
+          <view 
+            wx:if="{{getHabitStatus(item.id) === 'pending'}}"
+            class="checkin-btn"
+            data-habit-id="{{item.id}}"
+            bindtap="quickCheckin"
+            catchtap="true"
+          >
+            <text class="checkin-text">打卡</text>
+          </view>
+          <view wx:else class="completed-badge">
+            <text class="completed-text">✓</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <view class="empty-state-icon">📝</view>
+      <text class="empty-state-text">还没有习惯</text>
+      <text class="empty-state-desc">点击右上角 + 号创建你的第一个习惯</text>
+      <view class="btn btn-primary mt-16" bindtap="goToCreateHabit">
+        创建习惯
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToCreateHabit">
+      <view class="action-icon">➕</view>
+      <text class="action-text">添加习惯</text>
+    </view>
+    <navigator url="/pages/statistics/statistics" class="action-item">
+      <view class="action-icon">📊</view>
+      <text class="action-text">查看统计</text>
+    </navigator>
+    <navigator url="/pages/rewards/rewards" class="action-item">
+      <view class="action-icon">🎁</view>
+      <text class="action-text">积分商城</text>
+    </navigator>
+  </view>
+</view>
