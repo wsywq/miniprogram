@@ -1,0 +1,181 @@
+<!-- pages/statistics/statistics.wxml - 统计分析页面模板 -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading"></view>
+    <text class="loading-text">加载统计数据中...</text>
+  </view>
+
+  <!-- 主要内容 -->
+  <view wx:else>
+    <!-- 时间段选择 -->
+    <view class="period-selector">
+      <picker 
+        mode="selector" 
+        range="{{periods}}" 
+        range-key="label"
+        value="{{periods.findIndex(item => item.value === period)}}"
+        bindchange="onPeriodChange"
+      >
+        <view class="period-display">
+          <text class="period-text">{{getPeriodTitle()}}</text>
+          <view class="selector-arrow">▼</view>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 总体统计卡片 -->
+    <view class="overview-stats">
+      <view class="stat-row">
+        <view class="stat-card primary">
+          <text class="stat-number">{{stats.completionRate}}%</text>
+          <text class="stat-label">完成率</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{stats.streakDays}}</text>
+          <text class="stat-label">连续天数</text>
+        </view>
+      </view>
+      
+      <view class="stat-row">
+        <view class="stat-card">
+          <text class="stat-number">{{stats.totalCheckins}}</text>
+          <text class="stat-label">总打卡数</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{stats.totalPoints}}</text>
+          <text class="stat-label">获得积分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 趋势图表 -->
+    <view class="chart-section card">
+      <view class="section-header">
+        <text class="section-title">打卡趋势</text>
+      </view>
+      
+      <view class="trend-chart">
+        <view class="chart-container">
+          <view wx:for="{{trendData}}" wx:key="date" class="chart-bar">
+            <view 
+              class="bar" 
+              style="height: {{item.count * 20}}px; background: {{item.count > 0 ? '#4CAF50' : '#e0e0e0'}}"
+            ></view>
+            <text class="bar-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 习惯排行 -->
+    <view class="habits-ranking card">
+      <view class="section-header">
+        <text class="section-title">习惯排行</text>
+        <text class="section-desc">按完成率排序</text>
+      </view>
+      
+      <view wx:if="{{habitStats.length > 0}}" class="ranking-list">
+        <view 
+          wx:for="{{habitStats}}" 
+          wx:key="id"
+          class="ranking-item"
+          data-habit-id="{{item.id}}"
+          bindtap="goToHabitDetail"
+        >
+          <view class="ranking-info">
+            <view class="habit-icon">{{item.icon}}</view>
+            <view class="habit-details">
+              <text class="habit-name">{{item.name}}</text>
+              <text class="habit-progress">{{item.checkinDays}}/{{item.totalDays}} 天</text>
+            </view>
+          </view>
+          
+          <view class="ranking-stats">
+            <text 
+              class="completion-rate"
+              style="color: {{getCompletionColor(item.completionRate)}}"
+            >
+              {{item.completionRate}}%
+            </text>
+            <text class="completion-level">{{getCompletionLevel(item.completionRate)}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:else class="empty-state">
+        <text class="empty-text">暂无习惯数据</text>
+      </view>
+    </view>
+
+    <!-- 分类统计 -->
+    <view class="category-stats card">
+      <view class="section-header">
+        <text class="section-title">分类统计</text>
+      </view>
+      
+      <view wx:if="{{categoryStats.length > 0}}" class="category-list">
+        <view wx:for="{{categoryStats}}" wx:key="category" class="category-item">
+          <view class="category-info">
+            <text class="category-name">{{item.name}}</text>
+            <text class="category-count">{{item.count}} 个习惯</text>
+          </view>
+          
+          <view class="category-progress">
+            <view class="progress-bar">
+              <view 
+                class="progress-fill" 
+                style="width: {{item.completionRate}}%; background: {{getCompletionColor(item.completionRate)}}"
+              ></view>
+            </view>
+            <text class="progress-text">{{item.completionRate}}%</text>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:else class="empty-state">
+        <text class="empty-text">暂无分类数据</text>
+      </view>
+    </view>
+
+    <!-- 成就展示 -->
+    <view class="achievements card">
+      <view class="section-header">
+        <text class="section-title">我的成就</text>
+      </view>
+      
+      <view class="achievement-grid">
+        <view class="achievement-item {{stats.streakDays >= 7 ? 'unlocked' : 'locked'}}">
+          <text class="achievement-icon">🔥</text>
+          <text class="achievement-name">连续一周</text>
+          <text class="achievement-desc">连续打卡7天</text>
+        </view>
+        
+        <view class="achievement-item {{stats.streakDays >= 30 ? 'unlocked' : 'locked'}}">
+          <text class="achievement-icon">💪</text>
+          <text class="achievement-name">坚持一月</text>
+          <text class="achievement-desc">连续打卡30天</text>
+        </view>
+        
+        <view class="achievement-item {{stats.completionRate >= 80 ? 'unlocked' : 'locked'}}">
+          <text class="achievement-icon">⭐</text>
+          <text class="achievement-name">优秀表现</text>
+          <text class="achievement-desc">完成率达到80%</text>
+        </view>
+        
+        <view class="achievement-item {{stats.totalPoints >= 1000 ? 'unlocked' : 'locked'}}">
+          <text class="achievement-icon">💎</text>
+          <text class="achievement-name">积分达人</text>
+          <text class="achievement-desc">累计1000积分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 分享按钮 -->
+    <view class="share-section">
+      <button class="btn btn-outline btn-large" open-type="share">
+        分享我的统计
+      </button>
+    </view>
+  </view>
+</view>

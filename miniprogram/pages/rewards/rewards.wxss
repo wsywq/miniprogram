@@ -1,0 +1,435 @@
+/* pages/rewards/rewards.wxss - 积分奖励页面样式 */
+
+.container {
+  background: var(--background-color);
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+/* 积分头部 */
+.points-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  padding: 24px var(--spacing);
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.avatar-placeholder {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.points-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.points-display {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.points-number {
+  font-size: 32px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.points-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.user-level {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* 标签栏 */
+.tab-bar {
+  display: flex;
+  background: var(--card-background);
+  margin: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.tab-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tab-item.active .tab-text {
+  color: white;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+}
+
+.loading-text {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* 奖励商城 */
+.rewards-content {
+  padding: 0 var(--spacing);
+}
+
+.rewards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reward-card {
+  background: var(--card-background);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reward-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.reward-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--background-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-right: 16px;
+}
+
+.reward-info {
+  flex: 1;
+  margin-right: 12px;
+}
+
+.reward-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.reward-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.reward-price {
+  text-align: center;
+  margin-right: 12px;
+}
+
+.price-number {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.price-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.reward-status {
+  min-width: 60px;
+  text-align: center;
+}
+
+.status-available {
+  font-size: 12px;
+  color: var(--primary-color);
+  background: rgba(76, 175, 80, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.status-unavailable {
+  font-size: 12px;
+  color: var(--text-light);
+  background: var(--background-color);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* 积分记录 */
+.records-content {
+  padding: 0 var(--spacing);
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--background-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.record-info {
+  flex: 1;
+}
+
+.record-reason {
+  display: block;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.record-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.record-points {
+  text-align: right;
+}
+
+.points-change {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.points-change.earn {
+  color: var(--primary-color);
+}
+
+.points-change.spend {
+  color: var(--secondary-color);
+}
+
+/* 加载更多 */
+.load-more,
+.no-more {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.load-more-text,
+.no-more-text {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* 积分规则 */
+.rules-section {
+  background: var(--card-background);
+  margin: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.rules-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px var(--spacing);
+  background: var(--background-color);
+  cursor: pointer;
+}
+
+.rules-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.rules-arrow {
+  font-size: 16px;
+}
+
+.rules-content {
+  padding: 0 var(--spacing) 16px;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.rule-icon {
+  width: 24px;
+  text-align: center;
+  margin-right: 12px;
+}
+
+.rule-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* 分享区域 */
+.share-section {
+  padding: 0 var(--spacing);
+  margin-top: 20px;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  display: block;
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-desc {
+  display: block;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .points-header {
+    padding: 20px 12px;
+  }
+  
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .avatar-placeholder {
+    font-size: 20px;
+  }
+  
+  .user-name {
+    font-size: 16px;
+  }
+  
+  .points-number {
+    font-size: 28px;
+  }
+  
+  .tab-bar {
+    margin: 12px;
+  }
+  
+  .tab-item {
+    padding: 12px 0;
+  }
+  
+  .rewards-content,
+  .records-content {
+    padding: 0 12px;
+  }
+  
+  .reward-card {
+    padding: 12px;
+  }
+  
+  .reward-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .rules-section {
+    margin: 12px;
+  }
+  
+  .share-section {
+    padding: 0 12px;
+  }
+}

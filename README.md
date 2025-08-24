@@ -129,7 +129,12 @@ MIT License
 如有问题或建议，请通过以下方式联系：
 
 - GitHub Issues: [提交问题](https://github.com/wsywq/miniprogram/issues)
-- Email: [你的邮箱]
+- Email: feedback@example.com
+
+## 📄 更多文档
+
+- [开发指南](./开发指南.md) - 详细的开发指南和API文档
+- [更新日志](./CHANGELOG.md) - 版本更新记录
 
 ---
 

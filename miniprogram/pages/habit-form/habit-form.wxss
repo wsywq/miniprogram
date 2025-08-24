@@ -1,0 +1,233 @@
+/* pages/habit-form/habit-form.wxss - 习惯创建/编辑页面样式 */
+
+.container {
+  background: var(--background-color);
+  min-height: 100vh;
+}
+
+.habit-form {
+  padding: var(--spacing);
+}
+
+/* 表单区域 */
+.form-section {
+  background: var(--card-background);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  padding: 16px var(--spacing);
+  background: var(--background-color);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* 表单项 */
+.form-item {
+  padding: 16px var(--spacing);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  border: none;
+  background: transparent;
+}
+
+.form-input::placeholder {
+  color: var(--text-light);
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  border: none;
+  background: transparent;
+  resize: none;
+}
+
+.form-textarea::placeholder {
+  color: var(--text-light);
+}
+
+.char-count {
+  position: absolute;
+  right: var(--spacing);
+  bottom: 12px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* 选择器样式 */
+.picker-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.selector-arrow {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* 图标选择器 */
+.icon-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.selected-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-color);
+  border-radius: 50%;
+}
+
+/* 操作按钮 */
+.form-actions {
+  padding: var(--spacing) 0;
+}
+
+/* 模态框 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.icon-picker-modal {
+  background: var(--card-background);
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px var(--spacing);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.modal-close:active {
+  background: var(--background-color);
+  border-radius: 50%;
+}
+
+/* 图标网格 */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: var(--spacing);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.icon-item {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: var(--radius);
+  background: var(--background-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon-item:active {
+  transform: scale(0.95);
+}
+
+.icon-item.selected {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .habit-form {
+    padding: 12px;
+  }
+  
+  .form-item {
+    padding: 12px;
+  }
+  
+  .section-title {
+    padding: 12px;
+  }
+  
+  .icon-grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 12px;
+  }
+  
+  .icon-item {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,414 @@
+/* pages/statistics/statistics.wxss - 统计分析页面样式 */
+
+.container {
+  background: var(--background-color);
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.loading-text {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* 时间段选择器 */
+.period-selector {
+  background: var(--card-background);
+  margin: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.period-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px var(--spacing);
+}
+
+.period-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.selector-arrow {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+/* 总体统计 */
+.overview-stats {
+  padding: 0 var(--spacing);
+  margin-bottom: var(--spacing);
+}
+
+.stat-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stat-row:last-child {
+  margin-bottom: 0;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--card-background);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.stat-card.primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
+}
+
+.stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stat-card.primary .stat-number {
+  color: white;
+}
+
+.stat-card:not(.primary) .stat-number {
+  color: var(--primary-color);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.stat-card.primary .stat-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 图表区域 */
+.chart-section {
+  margin: 0 var(--spacing) var(--spacing);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* 趋势图表 */
+.trend-chart {
+  padding: 16px 0;
+}
+
+.chart-container {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  height: 120px;
+  padding: 0 8px;
+}
+
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 40px;
+}
+
+.bar {
+  width: 20px;
+  min-height: 4px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.bar-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* 习惯排行 */
+.habits-ranking {
+  margin: 0 var(--spacing) var(--spacing);
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.ranking-item:last-child {
+  border-bottom: none;
+}
+
+.ranking-item:active {
+  background: var(--background-color);
+  margin: 0 -16px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+}
+
+.ranking-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.habit-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--background-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.habit-details {
+  flex: 1;
+}
+
+.habit-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.habit-progress {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ranking-stats {
+  text-align: right;
+}
+
+.completion-rate {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.completion-level {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* 分类统计 */
+.category-stats {
+  margin: 0 var(--spacing) var(--spacing);
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-info {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.category-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.category-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.category-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.progress-bar {
+  width: 60px;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* 成就展示 */
+.achievements {
+  margin: 0 var(--spacing) var(--spacing);
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.achievement-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  background: var(--background-color);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.achievement-item.unlocked {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
+}
+
+.achievement-item.locked {
+  opacity: 0.5;
+}
+
+.achievement-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.achievement-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.achievement-desc {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.achievement-item.unlocked .achievement-name,
+.achievement-item.unlocked .achievement-desc {
+  color: white;
+}
+
+/* 分享区域 */
+.share-section {
+  padding: 0 var(--spacing);
+  margin-top: 20px;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-text {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .overview-stats {
+    padding: 0 12px;
+  }
+  
+  .stat-row {
+    gap: 8px;
+  }
+  
+  .stat-card {
+    padding: 16px 12px;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
+  
+  .chart-section,
+  .habits-ranking,
+  .category-stats,
+  .achievements {
+    margin: 0 12px 12px;
+  }
+  
+  .chart-container {
+    height: 100px;
+  }
+  
+  .achievement-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .share-section {
+    padding: 0 12px;
+  }
+}

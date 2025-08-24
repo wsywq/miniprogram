@@ -1,0 +1,141 @@
+<!-- pages/habit-form/habit-form.wxml - 习惯创建/编辑页面模板 -->
+<view class="container">
+  <form class="habit-form">
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+      
+      <!-- 习惯名称 -->
+      <view class="form-item">
+        <view class="form-label">习惯名称 *</view>
+        <input 
+          class="form-input"
+          placeholder="请输入习惯名称"
+          value="{{formData.name}}"
+          maxlength="20"
+          data-field="name"
+          bindinput="onInputChange"
+        />
+        <view class="char-count">{{formData.name.length}}/20</view>
+      </view>
+
+      <!-- 习惯描述 -->
+      <view class="form-item">
+        <view class="form-label">习惯描述</view>
+        <textarea 
+          class="form-textarea"
+          placeholder="描述一下这个习惯的具体内容（可选）"
+          value="{{formData.description}}"
+          maxlength="100"
+          data-field="description"
+          bindinput="onInputChange"
+        />
+        <view class="char-count">{{formData.description.length}}/100</view>
+      </view>
+    </view>
+
+    <!-- 个性化设置 -->
+    <view class="form-section">
+      <view class="section-title">个性化设置</view>
+      
+      <!-- 图标选择 -->
+      <view class="form-item">
+        <view class="form-label">选择图标</view>
+        <view class="icon-selector" bindtap="showIconPicker">
+          <view class="selected-icon">{{formData.icon}}</view>
+          <view class="selector-arrow">></view>
+        </view>
+      </view>
+
+      <!-- 分类选择 -->
+      <view class="form-item">
+        <view class="form-label">习惯分类</view>
+        <picker 
+          mode="selector" 
+          range="{{categories}}" 
+          range-key="label"
+          value="{{categories.findIndex(item => item.value === formData.category)}}"
+          bindchange="onCategoryChange"
+        >
+          <view class="picker-display">
+            <text>{{getCategoryLabel(formData.category)}}</text>
+            <view class="selector-arrow">></view>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 频率设置 -->
+      <view class="form-item">
+        <view class="form-label">打卡频率</view>
+        <picker 
+          mode="selector" 
+          range="{{frequencies}}" 
+          range-key="label"
+          value="{{frequencies.findIndex(item => item.value === formData.frequency)}}"
+          bindchange="onFrequencyChange"
+        >
+          <view class="picker-display">
+            <text>{{getFrequencyLabel(formData.frequency)}}</text>
+            <view class="selector-arrow">></view>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 提醒时间 -->
+      <view class="form-item">
+        <view class="form-label">提醒时间</view>
+        <picker 
+          mode="time" 
+          value="{{formData.reminder_time}}"
+          bindchange="onTimeChange"
+          bindcancel="onTimeCancel"
+        >
+          <view class="picker-display">
+            <text>{{formData.reminder_time}}</text>
+            <view class="selector-arrow">></view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="form-actions">
+      <button 
+        class="btn btn-primary btn-large"
+        disabled="{{loading}}"
+        bindtap="saveHabit"
+      >
+        {{loading ? '保存中...' : (isEdit ? '更新习惯' : '创建习惯')}}
+      </button>
+      
+      <button 
+        wx:if="{{isEdit}}"
+        class="btn btn-outline btn-large mt-16"
+        bindtap="deleteHabit"
+      >
+        删除习惯
+      </button>
+    </view>
+  </form>
+
+  <!-- 图标选择器弹窗 -->
+  <view wx:if="{{showIconPicker}}" class="modal-overlay" bindtap="hideIconPicker">
+    <view class="icon-picker-modal" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">选择图标</text>
+        <view class="modal-close" bindtap="hideIconPicker">×</view>
+      </view>
+      <view class="icon-grid">
+        <view 
+          wx:for="{{icons}}" 
+          wx:key="*this"
+          class="icon-item {{formData.icon === item ? 'selected' : ''}}"
+          data-icon="{{item}}"
+          bindtap="selectIcon"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

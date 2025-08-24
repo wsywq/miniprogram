@@ -1,0 +1,166 @@
+<!-- pages/checkin/checkin.wxml - 打卡详情页面模板 -->
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 主要内容 -->
+  <view wx:else>
+    <!-- 习惯信息头部 -->
+    <view class="habit-header">
+      <view class="habit-info">
+        <view class="habit-icon">{{habit.icon}}</view>
+        <view class="habit-details">
+          <text class="habit-name">{{habit.name}}</text>
+          <text class="habit-category">{{habit.category}}</text>
+        </view>
+      </view>
+      <view class="habit-actions">
+        <view class="action-btn" bindtap="goToEdit">
+          <text class="action-icon">✏️</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计卡片 -->
+    <view class="stats-section">
+      <view class="stat-card">
+        <text class="stat-number">{{streakDays}}</text>
+        <text class="stat-label">连续天数</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{completionRate}}%</text>
+        <text class="stat-label">本月完成率</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{Object.keys(checkins).length}}</text>
+        <text class="stat-label">本月打卡</text>
+      </view>
+    </view>
+
+    <!-- 今日打卡状态 -->
+    <view class="today-section card">
+      <view class="section-header">
+        <text class="section-title">今日打卡</text>
+        <text class="today-date">{{currentMonth}}-{{new Date().getDate()}}</text>
+      </view>
+      
+      <view wx:if="{{todayCheckin}}" class="checkin-completed">
+        <view class="completed-icon">✅</view>
+        <view class="completed-info">
+          <text class="completed-text">今日已完成打卡</text>
+          <text class="completed-time">{{todayCheckin.checkin_time}}</text>
+          <text wx:if="{{todayCheckin.note}}" class="completed-note">{{todayCheckin.note}}</text>
+        </view>
+      </view>
+      
+      <view wx:else class="checkin-pending">
+        <view class="pending-icon">⏰</view>
+        <view class="pending-info">
+          <text class="pending-text">今日还未打卡</text>
+          <text class="pending-desc">坚持就是胜利！</text>
+        </view>
+        <button class="btn btn-primary" bindtap="showCheckinModal">
+          立即打卡
+        </button>
+      </view>
+    </view>
+
+    <!-- 日历视图 -->
+    <view class="calendar-section card">
+      <view class="section-header">
+        <text class="section-title">本月记录</text>
+        <text class="month-text">{{currentMonth}}</text>
+      </view>
+      
+      <view class="calendar">
+        <!-- 星期标题 -->
+        <view class="week-header">
+          <text class="week-day">日</text>
+          <text class="week-day">一</text>
+          <text class="week-day">二</text>
+          <text class="week-day">三</text>
+          <text class="week-day">四</text>
+          <text class="week-day">五</text>
+          <text class="week-day">六</text>
+        </view>
+        
+        <!-- 日期网格 -->
+        <view class="calendar-grid">
+          <view wx:for="{{calendar}}" wx:key="index" class="calendar-week">
+            <view 
+              wx:for="{{item}}" 
+              wx:for-item="date" 
+              wx:key="index"
+              class="calendar-day {{date ? (date.hasCheckin ? 'has-checkin' : (date.isToday ? 'today' : '')) : 'empty'}}"
+              data-date="{{date}}"
+              bindtap="onDateTap"
+              bindlongpress="makeupCheckin"
+            >
+              <text wx:if="{{date}}" class="day-number">{{date.date}}</text>
+              <view wx:if="{{date && date.hasCheckin}}" class="checkin-dot"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="calendar-legend">
+        <view class="legend-item">
+          <view class="legend-dot completed"></view>
+          <text class="legend-text">已打卡</text>
+        </view>
+        <view class="legend-item">
+          <view class="legend-dot today"></view>
+          <text class="legend-text">今天</text>
+        </view>
+        <view class="legend-item">
+          <text class="legend-text">长按可补卡</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 打卡弹窗 -->
+  <view wx:if="{{showCheckinModal}}" class="modal-overlay" bindtap="hideCheckinModal">
+    <view class="checkin-modal" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">今日打卡</text>
+        <view class="modal-close" bindtap="hideCheckinModal">×</view>
+      </view>
+      
+      <view class="modal-content">
+        <!-- 备注输入 -->
+        <view class="form-item">
+          <view class="form-label">打卡备注（可选）</view>
+          <textarea 
+            class="form-textarea"
+            placeholder="记录一下今天的感受或收获..."
+            value="{{checkinForm.note}}"
+            maxlength="100"
+            bindinput="onNoteInput"
+          />
+        </view>
+        
+        <!-- 图片上传 -->
+        <view class="form-item">
+          <view class="form-label">添加图片（可选）</view>
+          <view wx:if="{{checkinForm.image}}" class="image-preview">
+            <image src="{{checkinForm.image}}" mode="aspectFill" class="preview-image"/>
+            <view class="image-remove" bindtap="removeImage">×</view>
+          </view>
+          <view wx:else class="image-upload" bindtap="chooseImage">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">添加图片</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-actions">
+        <button class="btn btn-outline" bindtap="hideCheckinModal">取消</button>
+        <button class="btn btn-primary" bindtap="confirmCheckin">确认打卡</button>
+      </view>
+    </view>
+  </view>
+</view>
